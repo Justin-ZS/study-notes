@@ -1,2 +1,2 @@
-# study-notes
+# Study Notes
 personal study records
