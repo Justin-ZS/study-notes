@@ -1,0 +1,213 @@
+# Layout and Style
+Relearn CSS and layout systematically
+
+## Resources
+1. [CSS Home/Spec](https://www.w3.org/Style/CSS/)
+
+## What is CSS?
+1. Browser will render HTML with default style to make it readable basically
+    * Headings will look larger than regular text
+    * Links are colored and underlined to distinguish them from the text
+1. With more specific CSS, the rendered document can be great-looking
+    * Appearance: text color and heading size
+    * Layout: normal flow, absolute, flexbox
+    * Advanced: animation, gradient image
+1. A rule-based language
+    ```css
+    [selector] {
+        property: value; /* a declaration */
+    }
+    ```
+
+## Apply CSS to a document
+### External stylesheet
+Reference an external CSS stylesheet from an HTML \<`link`> element
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My CSS experiment</title>
+    <!-- Inside a subdirectory called styles inside the current directory -->
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- Inside a subdirectory called general, which is in a subdirectory called styles, inside the current directory -->
+    <link rel="stylesheet" href="styles/general/style.css">
+    <!-- Go up one directory level, then inside a subdirectory called styles -->
+    <link rel="stylesheet" href="../styles/style.css">
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <p>This is my first CSS example</p>
+  </body>
+</html>
+```
+### Internal stylesheet
+Place CSS inside a \<`style`> element contained inside the HTML \<`head`>.
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My CSS experiment</title>
+    <style>
+      h1 {
+        color: blue;
+        background-color: yellow;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <p>This is my first CSS example</p>
+  </body>
+</html>
+```
+### Inline styles
+Inline styles are CSS declarations that affect a single HTML element, contained within a `style` attribute.
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My CSS experiment</title>
+  </head>
+  <body>
+    <h1 style="color: blue;background-color: yellow;border: 1px solid black;">Hello World!</h1>
+    <p style="color:red;">This is my first CSS example</p>
+  </body>
+</html>
+```
+
+### Attention
+1. If document includes multiple \<`style`> and \<`link`> elements , they will be applied to the DOM in the order they are included in the document
+1. Exclude `!important`, inline styles have the highest specificity.
+
+## CSS Rules
+### CSS Selector
+`(selector, element) -> boolean`  
+Describe the elements that will have the specified style applied to them.
+
+  | Selector | Example | Specificity(A,B,C) |
+  | -- | -- | -- |
+  | Universal | `*` | 0 |
+  | Negation Pseudo-Class | `:not()` | 0 for itself, inner selector counts |
+  | Type | `h` | C |
+  | Pseudo-Element | `p::first-line` | C |
+  | Attribute | `li[class^="box-"]` | B |
+  | Class | `.box` | B |
+  | Pseudo-Class | `p:first-child` | B |
+  | ID | `#unique` | A |
+
+  | Combinator | Example | Specificity(A,B,C) |
+  | -- | -- | -- |
+  | Descendant | `article p` | (0,0,2)|
+  | Child | `#uniq > p` | (1,0,1) |
+  | Adjacent sibling | `h1 + *[rel=up]` | (0,1,1) |
+  | General sibling | `.level ~ p:first-child` | (0,2,1) |
+
+  The numbers `(A,B,C)` (in a number system with a large base) gives the specificity
+
+### CSS Declarations
+1. A CSS declaration consists of three parts:
+    * **Property**: Human-readable identifiers that indicate the stylistic features
+    * **Value**: Each property is assigned a value. This value indicates how to style the property.
+    * **Important**: an important flag which is initially unset.
+1. `!important`
+    * This is used to make a particular declaration the most specific thing
+    * **Never use it unless you absolutely have to**
+    * Override `!important`
+        * Another `!important` flag with higher specificity.
+        * Another `!important` flag with the same specificity in the later source order
+1. Functions: a type of CSS value
+    * [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc()): perform calculations when specifying CSS property values
+1. at-rules: 
+    * [@media](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries): a conditional group rule whose condition is a media query
+### Conflicting Rules
+  * **Specificity**: more specific selectors override the conflicting styles.  
+    `(important, inline, id, attribute, element)`  
+  * **Cascade**: having same specificity, the later styles replace conflicting styles that appear earlier
+
+## Layout
+A document is laid out by transforming the elements into a set of boxes, whose size, position, and stacking level comes from the values of their CSS properties.
+### The CSS Box Model
+1. Each box has a `content area` and optional surrounding `padding`, `border`, and `margin` areas
+    * **Content box**
+        * contains text, descendant boxes, replaced element content(image)
+        * depend on the element content and/or its containing block size
+        * sized using `width` and `height`(block box)
+    * **Padding box**: sized using `padding`
+    * **Border box**: sized using `border`
+    * **Margin box**
+        * negative value is valid
+        * sized using `margin`
+    * **Scrollbar**: inserted between the inner border edge and the outer padding edge
+    ```
+      |-------------------------------------------------|
+      |                  margin-top                     |
+      |    |---------------------------------------|    |
+      |    |             border-top                |    |
+      |    |    |--------------------------|--|    |    |
+      |    |    |       padding-top        |##|    |    |    BL = border-left
+      |    |    |    |----------------|    |##|    |    |    BR = border-right
+      |    |    |    |                |    |  |    |    |    ML = margin-left
+      | ML | BL | PL |  content box   | PR |SW| BR | MR |    MR = margin-right
+      |    |    |    |                |    |  |    |    |    PL = padding-left
+      |    |    |    |----------------|    |  |    |    |    PR = padding-right
+      |    |    |      padding-bottom      |  |    |    |    SC = scroll corner
+      |    |    |--------------------------|--|    |    |    SW = scrollbar width
+      |    |    |     scrollbar height ####|SC|    |    |
+      |    |    |-----------------------------|    |    |
+      |    |           border-bottom               |    |
+      |    |---------------------------------------|    |
+      |                margin-bottom                    |
+      |-------------------------------------------------|
+    ```
+1. [The containing block](https://www.w3.org/TR/css-display-3/#containing-block)
+    * A containing block is a rectangle, not a box.
+    * The size and position of an element are often impacted by its *containing block*
+      * `with: <percentage>;` relative to the *width* of the containing block.
+      * `height: <percentage>;` relative to the *height* of the containing block.
+      * `padding: <percentage>;` relative to the *width* of the containing block.
+      * `margin: <percentage>;` relative to the *width* of the containing block.
+      * offset properties of [absolutely positioned elements](https://developer.mozilla.org/en-US/docs/Web/CSS/position#types_of_positioning): computed from the containing block.
+    * [Identifying the containing block](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block)
+        * `position: absolute`: the edge of the *padding box* of the nearest ancestor [positioned element](https://developer.mozilla.org/en-US/docs/Web/CSS/position#types_of_positioning)
+1. Relevant CSS properties
+    * `box-sizing: border-box;`: The `width` and `height` properties include the content, padding, and border
+    * `background: red;`: cover the content, padding, and border areas of a box
+    * `display: inline-block;`: allows to set `width` and `height` properties compare to `display: inline;`
+
+### CSS Flow Layout (Normal Flow)
+The default way to lay out all elements(boxes) in documents.
+1. There exists two types of boxes
+    * **Block Boxes**: `display: block;`
+      * The box will break onto new line
+      * The box will extend in the inline direction to fill the space available in its container.(as wide as its container)
+      * The `width` and `height` properties are respected
+      * Examples: \<`div`>, \<`p`>
+    * **Inline Boxes**: `display: inline;`
+      * The box will **not** break onto new line
+      * The `width` and `height` properties will not apply, only takes up as much width as necessary
+      * Vertically align an inline box by `vertical-align`
+      * The rectangular area that contains the boxes that form a line is called a line box
+      * Examples: \<`a`>, \<`span`>
+1. Any boxes in normal flow will be part of a *formatting context*
+1. A BFC only contains block boxes, an IFC only contains inline boxes.
+    * `<div>Some text<p>More text</p></div>` generate an anonymous block box around "Some text"
+    * `<p>Some <em>emphasized</em> text</p>` generate an anonymous inline box around "some" and "text"
+1. Block boxes are laid out in a *block formatting context*(a new and separate block flow layout), which is created by
+    * The root element of the document (\<html>)
+    * Floats (elements where `float` isn't none)
+    * Absolutely positioned elements
+    * Inline-blocks (elements with `display: inline-block;`).
+    * Block elements where `overflow` has a value other than `visible` and `clip`.
+    * [...](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context)
+1. BFCs cannot interfere with other BFCs
+    * Vertical margins between adjacent block boxes collapse in the same BFC
+    * Floated box only affect other elements in the same BFC
+    * Contains floated boxes (Floated box is taken out of the containing box, but still within the BFC)
+1. Inline boxes are laid out in a *inline formatting context*, which is created by
+    * A block container box that contains no block boxes
+    * In blink, it was created by adding [anonymous block boxes](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/third_party/blink/renderer/core/layout/ng/inline/README.md)
+
