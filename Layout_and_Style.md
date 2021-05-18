@@ -134,13 +134,13 @@ A document is laid out by transforming the elements into a set of boxes, whose s
 1. Each box has a `content area` and optional surrounding `padding`, `border`, and `margin` areas
     * **Content box**
         * contains text, descendant boxes, replaced element content(image)
-        * depend on the element content and/or its containing block size
+        * depend on the element content and/or its *containing block* size
         * sized using `width` and `height`(block box)
     * **Padding box**: sized using `padding`
     * **Border box**: sized using `border`
     * **Margin box**
-        * negative value is valid
         * sized using `margin`
+        * negative value is valid
     * **Scrollbar**: inserted between the inner border edge and the outer padding edge
     ```
       |-------------------------------------------------|
@@ -178,28 +178,35 @@ A document is laid out by transforming the elements into a set of boxes, whose s
     * `background: red;`: cover the content, padding, and border areas of a box
     * `display: inline-block;`: allows to set `width` and `height` properties compare to `display: inline;`
 
-### CSS Flow Layout (Normal Flow)
+### CSS Flow Layout ([Normal Flow](https://www.w3.org/TR/CSS22/visuren.html#normal-flow))
 The default way to lay out all elements(boxes) in documents.
 1. There exists two types of boxes
     * **Block Boxes**: `display: block;`
       * The box will break onto new line
-      * The box will extend in the inline direction to fill the space available in its container.(as wide as its container)
+      * The box will extend in the inline direction to fill the space available in its container
+      * new line + fill space = as wide as its container
       * The `width` and `height` properties are respected
       * Examples: \<`div`>, \<`p`>
     * **Inline Boxes**: `display: inline;`
       * The box will **not** break onto new line
       * The `width` and `height` properties will not apply, only takes up as much width as necessary
-      * Vertically align an inline box by `vertical-align`
-      * The rectangular area that contains the boxes that form a line is called a line box
+      * The rectangular area that contains the boxes that form a **line box**
+          * A line box is always tall enough for all of the boxes it contains. ([line-height](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height) specify the *minimal* height)
+          * `line-height: normal;` roughly means 1.2 * `font-size`
+          * When the height of a box is less than the height of the line box containing it, the vertical alignment of that box is determined by the [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align)
+          * When the total width of the inline boxes on a line is less than the width of the line box containing them, their horizontal distribution within the line box is determined by the [text-align](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align)
       * Examples: \<`a`>, \<`span`>
-1. Any boxes in normal flow will be part of a *formatting context*
-1. A BFC only contains block boxes, an IFC only contains inline boxes.
+1. A **block container box** either contains only block boxes or contains only inline boxes
     * `<div>Some text<p>More text</p></div>` generate an anonymous block box around "Some text"
-    * `<p>Some <em>emphasized</em> text</p>` generate an anonymous inline box around "some" and "text"
-1. Block boxes are laid out in a *block formatting context*(a new and separate block flow layout), which is created by
-    * The root element of the document (\<html>)
+    * `<p>Some <em>emphasized</em> text</p>` generate anonymous inline boxes around "some" and "text"
+    * when an inline box contains block boxes, split the inline box into anonymous block boxes([demo](./demo/split_inline_box.html)) 
+1. Any boxes in normal flow will be part of a *formatting context*, includes
+    * Block formatting context(BFC) for block boxes
+    * Inline formatting context(IFC) for inline boxes
+1. Block boxes are laid out in a *[BFC](https://www.w3.org/TR/CSS22/visuren.html#block-formatting)*(a new and separate block flow layout), which is created by
+    * The root element of the document (\<`html`>)
     * Floats (elements where `float` isn't none)
-    * Absolutely positioned elements
+    * [Absolutely positioned elements](https://developer.mozilla.org/en-US/docs/Web/CSS/position#types_of_positioning)
     * Inline-blocks (elements with `display: inline-block;`).
     * Block elements where `overflow` has a value other than `visible` and `clip`.
     * [...](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context)
@@ -207,7 +214,13 @@ The default way to lay out all elements(boxes) in documents.
     * Vertical margins between adjacent block boxes collapse in the same BFC
     * Floated box only affect other elements in the same BFC
     * Contains floated boxes (Floated box is taken out of the containing box, but still within the BFC)
-1. Inline boxes are laid out in a *inline formatting context*, which is created by
+1. Inline boxes are laid out in an *[IFC](https://www.w3.org/TR/CSS22/visuren.html#inline-formatting)*, which is created by
     * A block container box that contains no block boxes
     * In blink, it was created by adding [anonymous block boxes](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/third_party/blink/renderer/core/layout/ng/inline/README.md)
+1. Relative positioning(`position: relative;`)
+    * Boxes will be laid out according to the normal flow, and then shifted *relative to itself*
+    * Other boxes won't be affected thus their size and position remain unchanged
 
+### Float and Absolute
+
+### Flexbox
