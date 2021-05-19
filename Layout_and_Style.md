@@ -2,7 +2,9 @@
 Relearn CSS and layout systematically
 
 ## Resources
-1. [CSS Home/Spec](https://www.w3.org/Style/CSS/)
+1. [CSS Home](https://www.w3.org/Style/CSS/)
+1. [CSS Spec 2.2](https://www.w3.org/TR/CSS22/Overview.html#minitoc)
+1. [CSS MDN](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 ## What is CSS?
 1. Browser will render HTML with default style to make it readable basically
@@ -172,7 +174,6 @@ A document is laid out by transforming the elements into a set of boxes, whose s
       * `margin: <percentage>;` relative to the *width* of the containing block.
       * offset properties of [absolutely positioned elements](https://developer.mozilla.org/en-US/docs/Web/CSS/position#types_of_positioning): computed from the containing block.
     * [Identifying the containing block](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block)
-        * `position: absolute`: the edge of the *padding box* of the nearest ancestor [positioned element](https://developer.mozilla.org/en-US/docs/Web/CSS/position#types_of_positioning)
 1. Relevant CSS properties
     * `box-sizing: border-box;`: The `width` and `height` properties include the content, padding, and border
     * `background: red;`: cover the content, padding, and border areas of a box
@@ -193,13 +194,14 @@ The default way to lay out all elements(boxes) in documents.
       * The rectangular area that contains the boxes that form a **line box**
           * A line box is always tall enough for all of the boxes it contains. ([line-height](https://developer.mozilla.org/en-US/docs/Web/CSS/line-height) specify the *minimal* height)
           * `line-height: normal;` roughly means 1.2 * `font-size`
+          * The height if a line box is calculated as [follows](https://www.w3.org/TR/CSS22/visudet.html#line-height)
           * When the height of a box is less than the height of the line box containing it, the vertical alignment of that box is determined by the [vertical-align](https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align)
           * When the total width of the inline boxes on a line is less than the width of the line box containing them, their horizontal distribution within the line box is determined by the [text-align](https://developer.mozilla.org/en-US/docs/Web/CSS/text-align)
       * Examples: \<`a`>, \<`span`>
 1. A **block container box** either contains only block boxes or contains only inline boxes
     * `<div>Some text<p>More text</p></div>` generate an anonymous block box around "Some text"
     * `<p>Some <em>emphasized</em> text</p>` generate anonymous inline boxes around "some" and "text"
-    * when an inline box contains block boxes, split the inline box into anonymous block boxes([demo](./demo/split_inline_box.html)) 
+    * when an inline box contains block boxes, split the inline box into anonymous block boxes.([demo](https://jsbin.com/lidupogiyi/edit?html,output)) 
 1. Any boxes in normal flow will be part of a *formatting context*, includes
     * Block formatting context(BFC) for block boxes
     * Inline formatting context(IFC) for inline boxes
@@ -212,15 +214,35 @@ The default way to lay out all elements(boxes) in documents.
     * [...](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context)
 1. BFCs cannot interfere with other BFCs
     * Vertical margins between adjacent block boxes collapse in the same BFC
-    * Floated box only affect other elements in the same BFC
+    * A floated box only affect other elements in the same BFC
     * Contains floated boxes (Floated box is taken out of the containing box, but still within the BFC)
 1. Inline boxes are laid out in an *[IFC](https://www.w3.org/TR/CSS22/visuren.html#inline-formatting)*, which is created by
     * A block container box that contains no block boxes
     * In blink, it was created by adding [anonymous block boxes](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/third_party/blink/renderer/core/layout/ng/inline/README.md)
 1. Relative positioning(`position: relative;`)
-    * Boxes will be laid out according to the normal flow, and then shifted *relative to itself*
-    * Other boxes won't be affected thus their size and position remain unchanged
+    * Boxes will be laid out according to the normal flow, and then shifted *relative to itself*(normal position)
+    * Reserve its normal position, so the size and position of other elements remain unchanged
+    * The vertical offset from its normal position is specified by [top](https://developer.mozilla.org/en-US/docs/Web/CSS/top) and [bottom](https://developer.mozilla.org/en-US/docs/Web/CSS/bottom)
+    * The horizontal offset from its normal position is specified by [left](https://developer.mozilla.org/en-US/docs/Web/CSS/left) and [right](https://developer.mozilla.org/en-US/docs/Web/CSS/right)
 
 ### Float and Absolute
+1. Float(`float: left;`)
+    * A floated box is shifted to the left or right until
+        * its outer edge touches the containing block edge
+        * or the outer edge of another float (can be prohibited by [clear](https://developer.mozilla.org/en-US/docs/Web/CSS/clear))
+    * A floated box is not in the normal flow
+        * other boxes in flow will be laid out normally as if the floated box did not exist
+        * a block box with only floated boxes inside has zero height.([demo](https://jsbin.com/pufucegamo/edit?html,output))
+    * A floated box will create a new BFC for inner boxes
+    * A floated box only affect other boxes in the same BFC
+    * A BFC box will increase its height to contains participated floated boxes.([demo](https://jsbin.com/tirenedice/edit?html,output))
+1. Absolute(`position: absolute;` | `position: fixed;`)
+    * An absolutely positioned box is explicitly offset with respect to its containing block, which is
+      * the *padding edge* of the nearest positioned ancestor (`position` value is anything but `static`)
+      * or the initial containing block (\<`html`>)
+      * [viewport](https://developer.mozilla.org/en-US/docs/Glossary/Viewport) for fixed positioned box
+    * An absolutely positioned box is not in the normal flow
+    * An absolutely positioned box create a new BFC for inner boxes
 
 ### Flexbox
+1. [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
