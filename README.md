@@ -4,4 +4,4 @@ personal study records
 1. [The Little Typer](./The_Little_Typer.md)
 
 ### Frontend
-1. [Layout and Style](./Layout_and_Style.md)
+1. [Layout and Style](./Style_and_Layout.md)

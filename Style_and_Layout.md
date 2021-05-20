@@ -1,4 +1,4 @@
-# Layout and Style
+# Style and Layout
 Relearn CSS and layout systematically
 
 ## Resources
@@ -6,7 +6,8 @@ Relearn CSS and layout systematically
 1. [CSS Spec 2.2](https://www.w3.org/TR/CSS22/Overview.html#minitoc)
 1. [CSS MDN](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
-## What is CSS?
+## Style
+### What is CSS?
 1. Browser will render HTML with default style to make it readable basically
     * Headings will look larger than regular text
     * Links are colored and underlined to distinguish them from the text
@@ -21,8 +22,8 @@ Relearn CSS and layout systematically
     }
     ```
 
-## Apply CSS to a document
-### External stylesheet
+### Apply CSS to a document
+#### External stylesheet
 Reference an external CSS stylesheet from an HTML \<`link`> element
 ```html
 <!DOCTYPE html>
@@ -43,7 +44,7 @@ Reference an external CSS stylesheet from an HTML \<`link`> element
   </body>
 </html>
 ```
-### Internal stylesheet
+#### Internal stylesheet
 Place CSS inside a \<`style`> element contained inside the HTML \<`head`>.
 ```html
 <!DOCTYPE html>
@@ -65,7 +66,7 @@ Place CSS inside a \<`style`> element contained inside the HTML \<`head`>.
   </body>
 </html>
 ```
-### Inline styles
+#### Inline styles
 Inline styles are CSS declarations that affect a single HTML element, contained within a `style` attribute.
 ```html
 <!DOCTYPE html>
@@ -81,12 +82,12 @@ Inline styles are CSS declarations that affect a single HTML element, contained 
 </html>
 ```
 
-### Attention
+#### Attention
 1. If document includes multiple \<`style`> and \<`link`> elements , they will be applied to the DOM in the order they are included in the document
 1. Exclude `!important`, inline styles have the highest specificity.
 
-## CSS Rules
-### CSS Selector
+### CSS Rules
+#### CSS Selector
 `(selector, element) -> boolean`  
 Describe the elements that will have the specified style applied to them.
 
@@ -110,7 +111,7 @@ Describe the elements that will have the specified style applied to them.
 
   The numbers `(A,B,C)` (in a number system with a large base) gives the specificity
 
-### CSS Declarations
+#### CSS Declarations
 1. A CSS declaration consists of three parts:
     * **Property**: Human-readable identifiers that indicate the stylistic features
     * **Value**: Each property is assigned a value. This value indicates how to style the property.
@@ -125,7 +126,7 @@ Describe the elements that will have the specified style applied to them.
     * [calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc()): perform calculations when specifying CSS property values
 1. at-rules: 
     * [@media](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries): a conditional group rule whose condition is a media query
-### Conflicting Rules
+#### Conflicting Rules
   * **Specificity**: more specific selectors override the conflicting styles.  
     `(important, inline, id, attribute, element)`  
   * **Cascade**: having same specificity, the later styles replace conflicting styles that appear earlier
@@ -246,3 +247,36 @@ The default way to lay out all elements(boxes) in documents.
 
 ### Flexbox
 1. [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
+### Layered Presentation
+Each box also lie along a "z-axis"
+  * each box belongs to one **stacking context**
+  * each box in a given stacking context has an integer **stack level** and stacked accordingly
+1. A stacking context is formed as following
+    * Root element of the document (\<`html`>)
+    * Positioned box and z-index value other than `auto`
+    * Element with a [opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity) value less than 1
+    * [...](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context#the_stacking_context)
+1. The **stack level** of the box is specified by [z-index](https://developer.mozilla.org/en-US/docs/Web/CSS/z-index) value
+    * only applies to positioned boxes(`position` other than `static`)
+    * positive values: boxes with a larger z-index cover those with a smaller one
+    * default `auto` value: the stack level is `0`
+    * negative values: stacked behind the boxes with `auto` value
+1. Layers in each stacking context
+    * **Root** (current stacking context)
+        * the background and borders of the element forming the stacking context.
+    * **Negative Stack Level** (most negative first)
+        * the child stacking contexts with negative stack levels
+    * **Blocks in flow**
+        * the in-flow, non-inline-level, non-positioned descendants.
+    * **Floats**
+        * the non-positioned floats (`float: left`)
+    * **Inlines in flow**
+        * the in-flow, inline-level, non-positioned descendants
+        * inline tables
+        * inline blocks
+    * **0 Stack Level**
+        * the child stacking contexts with stack level 0 (`opacity: 0.1;`)
+        * the positioned descendants with stack level 0 (`position: relative;`)
+    * **Positive Stack Level** (least positive first) (`position: relative; z-index: 10;`)
+        * the child stacking contexts with positive stack levels
