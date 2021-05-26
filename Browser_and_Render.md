@@ -4,7 +4,7 @@ Dive into browser architecture and rendering flow.
 ## Resources
 1. [Chromium architecture overview](http://szeged.github.io/sprocket/architecture_overview.html)
 1. [How Blink works](https://docs.google.com/document/d/1aitSOucL0VHZa9Z2vbRJSyAIsAz24kX8LFByQ5xQnUg/edit#heading=h.v5plba74lfde)
-1. Life of a pixel([Video](https://www.youtube.com/watch?v=K2QHdgAKP-s)|[PPT]((https://docs.google.com/presentation/d/1boPxbgNrTU0ddsc144rcXayGA_WF53k96imRH8Mp34Y/edit#slide=id.p)))
+1. Life of a pixel([Video](https://www.youtube.com/watch?v=K2QHdgAKP-s)|[PPT](https://docs.google.com/presentation/d/1boPxbgNrTU0ddsc144rcXayGA_WF53k96imRH8Mp34Y/edit#slide=id.p))
 
 ## Chromium Architecture
 ### Chromium is a multi-process browser
@@ -166,9 +166,50 @@ From an HTML file to pixels in the screen
     * Paint elements in **stacking order** (controlled by `z-index`)
     * Paint runs in multiple phases, each paint phase is a separate traversal of a **stacking context**.
     * LocalFrameView::PaintTree
-1. Raster(Compositor thread): `PaintOperation[] -> ColorBitmap`
-    * Raster can be accelerated by the GPU
-1. Draw
-    * GPU process
+1. Raster(*Compositor thread*): `PaintOperation[] -> ColorBitmap`
+    * Raster can be accelerated by the GPU process
+1. Draw(*Compositor thread*)
+    * Display content with GPU process
 
-### Update
+### Changes
+1. Each pipeline stage tracks granular asynchronous invalidations.
+    * Style -> `Node::SetNeedsStyleRecalc()`
+    * Layout -> `LayoutObject::SetNeedsLayout()`
+    * Paint -> `PaintInvalidator::InvalidatePaint()`
+    * Raster -> `RasterInvalidator::Generate()`
+1. Layers
+    * New **stacking context** will promote a layout object to a layer
+    * Main thread will decompose the page into layers before paint
+    * Compositor thread will raster layers independently and composite them into one
+    * The compositor can handle input events like scroll, clip, scale, ...
+1. Compositing Assignments
+    * Build layers before paint in the main thread
+    * [PaintLayerCompositor::UpdateAssignmentsIfNeeded](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/paint/compositing/paint_layer_compositor.cc;l=301;drc=0b4c01de4879deb0e3b288e3732641d1d9e343c9?q=PaintLayerCompositor::UpdateAssignmentsIfNeeded&sq=&ss=chromium%2Fchromium%2Fsrc)
+1. Pre-paint
+    * Build the property trees before paint in the main thread
+    * [PrePaintTreeWalk::Walk](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/paint/pre_paint_tree_walk.cc;l=234;drc=0b4c01de4879deb0e3b288e3732641d1d9e343c9?q=PrePaintTreeWalk::Walk&ss=chromium%2Fchromium%2Fsrc)
+    * [PaintPropertyTreeBuilder](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/paint/paint_property_tree_builder.h;l=275;drc=0b4c01de4879deb0e3b288e3732641d1d9e343c9?q=PaintPropertyTreeBuilder&ss=chromium%2Fchromium%2Fsrc)
+    * The property trees contain various properties for a layer
+        * overflow
+        * clip
+        * transform
+        * ...
+    * The compositor can apply them to a layer
+
+## [Rendering Optimization](https://developers.google.com/web/fundamentals/performance/rendering?hl=en)
+1. Recap the render pipeline: `Style -> Layout -> Paint -> Composite`
+    * Main thread: `Style`, `Layout`, `Paint`
+    * Compositor thread: `Composite`
+1. Whole pipeline: some properties will reflow the page
+    * Geometry: `width`, `height`, `top`, `left`, `padding`, `margin`, ...
+    * Position: `float`, `display`, `position`, `flex`, ...
+    * BFC Changing: `overflow`
+1. Skip `Layout`: some properties are "paint only"
+    * Visual: `background`, `color`
+    * Stacking Context Changing: `z-index`, `opacity`
+1. Only `Composite`: best performance!
+    * Layer properties: `transform`, `opacity`
+    * Promote elements with `will-change` or `translateZ`
+    * Avoid layer explosions
+1. Resources
+    * [CSS Triggers](https://csstriggers.com/): A CSS property will trigger which render flow
