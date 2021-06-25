@@ -1,6 +1,9 @@
 # Study Notes
 Keep lighting up the skill tree
 
+### Computer/Program
+1. [Computer Architecture](./Computer_Architecture.md)
+
 ### Program/Language
 1. [The Little Typer](./The_Little_Typer.md)
 
