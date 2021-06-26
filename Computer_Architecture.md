@@ -142,7 +142,7 @@ An instruction is fetched and executed in control flow order
     * Non-uniform decode
     * Many addressing modes
 
-## MIPS
+## [MIPS](https://course.ece.cmu.edu/~ece447/s15/lib/exe/fetch.php?media=mips_reference_data.pdf)
 ### State
 1. Program Counter(PC): memory address of current instruction
 1. Memory: 32-bit address(4GB)
@@ -206,3 +206,29 @@ An instruction is fetched and executed in control flow order
     * Caller: I already saved the values from these registers
     * Callee: Don’t count on them staying the same values after I am done
         
+## Microarchitecture Basic
+1. Process Instructions: AS -> AS'
+    * AS: Architectural state before processing
+    * process instruction
+    * AS': Architectural state after processing
+1. ISA specifies abstractly what AS' should be, given an instruction as AS
+1. Microarchitecture implements how AS is transformed to AS’
+1. Single-cycle Machine
+    * Each instruction takes a single clock cycle
+    * the slowest instruction determines cycle time
+    * CPI(cycles per instruction) is 1
+1. Instruction Processing phases
+    * Fetch
+    * Decode
+    * Evaluate Address
+    * Fetch Operands
+    * Execute
+    * Store Result
+1. An instruction processing engine consists by:
+    * Datapath: hardware elements that deal with and transform data signal
+    * Control logic: hardware elements that determine control signals
+1. Design Principles
+    * Critical path: decrease the maximum logic delay
+    * Common case: spend time and resources on where it matters most
+    * Balanced: balance all components
+    * Keep it simple
