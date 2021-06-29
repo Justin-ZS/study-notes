@@ -75,7 +75,7 @@ An instruction is fetched and executed in control flow order
     * **High-level**: Doubly linked list, queue, string, bit vector, stack
 1. Registers
     * **Why?**: A recently produced/accessed value is likely to be used more than once
-    * How many and size of each register ?
+    * How many and size of each register?
 1. Memory organization
     * **Address space**: How many uniquely identifiable locations in memory
     * **Addressability**: How much data does each uniquely identifiable location store
@@ -207,16 +207,17 @@ An instruction is fetched and executed in control flow order
     * Callee: Don’t count on them staying the same values after I am done
         
 ## Microarchitecture Basic
-1. Process Instructions: AS -> AS'
-    * AS: Architectural state before processing
+1. Process Instructions: `AS -> AS'`
+    * **AS**: Architectural state before processing
     * process instruction
-    * AS': Architectural state after processing
+    * **AS'**: Architectural state after processing
 1. ISA specifies abstractly what AS' should be, given an instruction as AS
 1. Microarchitecture implements how AS is transformed to AS’
-1. Single-cycle Machine
+1. Single-Cycle Machine
     * Each instruction takes a single clock cycle
+    * `CPI`(cycles per instruction) is 1
     * the slowest instruction determines cycle time
-    * CPI(cycles per instruction) is 1
+    * Clock cycle time = long
 1. Instruction Processing phases
     * Fetch
     * Decode
@@ -225,10 +226,21 @@ An instruction is fetched and executed in control flow order
     * Execute
     * Store Result
 1. An instruction processing engine consists by:
-    * Datapath: hardware elements that deal with and transform data signal
-    * Control logic: hardware elements that determine control signals
+    * **Datapath**: hardware elements that deal with and transform data signal
+    * **Control logic**: hardware elements that determine control signals
+1. Control signals controls two things:
+    * How the datapath should process the data
+    * How to generate the control signal for the next clock cycle
 1. Design Principles
-    * Critical path: decrease the maximum logic delay
-    * Common case: spend time and resources on where it matters most
-    * Balanced: balance all components
-    * Keep it simple
+    * **Critical path**: decrease the maximum logic delay
+    * **Common case**: spend time and resources on where it matters most
+    * **Balanced**: balance all components
+    * **Keep it simple**
+1. Multi-Cycle Machine
+    * Each instruction takes as many clock cycles as it needs to take
+    * `CPI` = different for each instruction
+    * Clock cycle time = short
+1. Microprogrammed Control Structure
+    * **Microinstruction**: control signals
+    * **Control store**: store all microinstructions
+    * **Microsequencer**: determines the address of next microinstruction
