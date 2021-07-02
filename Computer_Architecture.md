@@ -244,3 +244,65 @@ An instruction is fetched and executed in control flow order
     * **Microinstruction**: control signals
     * **Control store**: store all microinstructions
     * **Microsequencer**: determines the address of next microinstruction
+1. Advantages of Microprogrammed Control
+    * a simple design to do powerful computation by sequencer
+    * enables easy extensibility of the ISA
+    * enables update of machine behavior
+    
+## Pipeline
+1. Idea: Increases instruction processing throughput
+    * Divide the instruction processing cycle into distinct“stages” of processing
+    * Ensure there are enough hardware resources to process one instruction in each stage
+    * Process a different instruction in each stage
+1. Four independent ADDs
+    * Multi-cycle: 4 cycles per instruction
+        ```js
+        [
+            [F,D,E,W,_,_,_,_,_,_,_,_,_,_,_,_],
+            [_,_,_,_,F,D,E,W,_,_,_,_,_,_,_,_],
+            [_,_,_,_,_,_,_,_,F,D,E,W,_,_,_,_],
+            [_,_,_,_,_,_,_,_,_,_,_,_,F,D,E,W],
+        ]
+        ```
+    * Pipelined: 4 cycles per 4 instructions
+        ```js
+        [
+            [F,D,E,W,_,_,_],
+            [_,F,D,E,W,_,_],
+            [_,_,F,D,E,W,_],
+            [_,_,_,F,D,E,W],
+        ]
+        ```
+1. Ideal Pipeline and Not Ideal
+    * Repetition of identical operations
+        * actually, different instructions don't need the same stages
+        * external fragmentation (some pipe stages idle for some instructions)
+    * Repetition of independent operations
+        * actually, different pipeline stages don't have the same latency
+        * internal fragmentation (some stages are too fast but all take the same clock cycle time)
+    * Uniformly partitionable suboperations
+        * actually, instructions are not independent of each other
+        * pipeline stalls (pipeline is not always moving)
+1. Pipeline Stalls and solutions
+    * Resource contention
+        * duplicate the resource or increase its throughput
+        * stall one of the contending stages
+    * Dependences
+        * Data Dependences
+            * Flow Dependence: read after write
+                * Detect and wait unit value is available
+                * Predict the value, execute speculatively, and verify
+                * Detect and eliminate the dependence at software level
+            * Output Dependence: write after write
+            * Anti dependence: write after read
+        * Control
+    * Long-latency operations
+1. Dependence Detection
+    * Scoreboard
+        * Add a valid bit for each register
+        * An instruction that is writing to it resets the bit
+        * An instruction in Decode stage checks if all its registers are valid
+    * Combinational dependence check logic
+        * if the instruction in later stages is  supposed to write any source register of the decoded instructions
+    
+
