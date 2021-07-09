@@ -290,12 +290,17 @@ An instruction is fetched and executed in control flow order
     * Dependences
         * Data Dependences
             * Flow Dependence: read after write
-                * Detect and wait unit value is available
+                * Detect and wait unit value is available.
                 * Predict the value, execute speculatively, and verify
+                * Detect and forward data to dependent instruction.
                 * Detect and eliminate the dependence at software level
             * Output Dependence: write after write
             * Anti dependence: write after read
-        * Control
+        * Control Dependences: know the address of the next instruction 
+            * Stall until the next fetch address get known
+            * Branch prediction: guess the next fetch address
+            * Predicted execution: exec all branches with condition, some will become no-ops
+            * Fine-grained Multi-threading: all instructions in pipeline come from different threads
     * Long-latency operations
 1. Dependence Detection
     * Scoreboard
