@@ -365,5 +365,27 @@ An instruction is fetched and executed in control flow order
         * Arch reg file: updated in order with ROB
         * Future reg file: updated asap
 1. A branch misprediction resembles an "exception" 
-
-
+## Out-of-Order Execution (Dynamic Instruction Scheduling)
+1. An In-order Pipeline
+    * A true data dependency stalls dispatch of younger instructions into execution units
+1. An other solution: out-of-order dispatch
+    * Move dependent instructions out of the way of independent ones
+    * Dispatch dependent instructions when all source "values" are available (dataflow order)
+1. Enabling OoO Execution
+    * Link the consumer of a value to the producer
+        * Register renaming: tag each value
+    * Buffer instructions until they are ready to exec
+        * Reservation stations
+    * Keep track of readiness of source values
+        * Broadcast the value tag
+        * Instruction compare the tags
+    * Dispatch the instruction when all source values are ready
+1. OoO Execution with Precise Exceptions
+```txt
+              <-----Tag/Broadcast Bus-----<
+             |                            |
+          |        | -> E -----------> |       | 
+F -> D -> |Schedule| -> E -> E ------> |Reorder| -> W
+          |        | -> E -> E -> E -> |       |
+```
+    
