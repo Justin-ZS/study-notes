@@ -1,6 +1,8 @@
 # Study Notes
 Keep lighting up the skill tree
 
+### About Me
+1. [Resume](./Resume.md)
 ### Computer/Program
 1. [Computer Architecture](./Computer_Architecture.md)
 
