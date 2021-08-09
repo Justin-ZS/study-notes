@@ -2,7 +2,9 @@
 Keep lighting up the skill tree
 
 ### About Me
-1. [Resume](./Resume.md)
+1. [Resume(zh)](./Resume_zh.md)
+1. [Resume(en)](./Resume_en.md)
+
 ### Computer/Program
 1. [Computer Architecture](./Computer_Architecture.md)
 
