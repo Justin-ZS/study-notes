@@ -388,4 +388,12 @@ An instruction is fetched and executed in control flow order
 F -> D -> |Schedule| -> E -> E ------> |Reorder| -> W
           |        | -> E -> E -> E -> |       |
 ```
-    
+1. An out-of-order machine is a “restricted data flow” machine
+    * Dataflow-based execution is only at uarch level.
+    * The dataflow graph is limited to the instruction window.(all decoded but not retired instructions)
+    * ISA is still based on sequential execution.(instruction is still fetched sequentially)
+1. Memory Dependence Handling
+    * Obey store-load dependence when the address is not known until a load/store executes
+        * **Conservative**: Stall the load until all previous stores have clear addresses.
+        * **Aggressive**: Assume the load is independent of stores with unknown addresses
+        * **Intelligent**: Predict if the load is dependent on an unknown-address store
