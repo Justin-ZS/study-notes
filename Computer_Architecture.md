@@ -397,3 +397,41 @@ F -> D -> |Schedule| -> E -> E ------> |Reorder| -> W
         * **Conservative**: Stall the load until all previous stores have clear addresses.
         * **Aggressive**: Assume the load is independent of stores with unknown addresses
         * **Intelligent**: Predict if the load is dependent on an unknown-address store
+
+## SIMD
+1. SIMD Processing
+    * Single instruction operates on multiple data elements
+    ```txt
+    LD  VR     <- A[3:0]
+    ADD VR     <- VR,1
+    MUL VR     <- VR,2
+    ST  A[3:0] <- VR
+    ```
+    * **Array Processor**: Instruction operates on multiple data elements at the `same time` using `different spaces`
+    ```txt
+    LD0   LD1  LD2  LD3
+    ADD0  ADD1 ADD2 ADD3
+    MUL0  MUL1 MUL2 MUL3
+    ST0   ST1  ST2  ST3
+    ```
+    * **Vector Processor**: Instruction operates on multiple data elements in `consecutive time` steps using the `same space`
+    ```txt
+    LD0
+    LD1  ADD0
+    LD2  ADD1 MUL0
+    LD3  ADD2 MUL1 ST0
+         ADD3 MUL2 ST1
+              MUL3 ST2
+                   ST3
+    ```
+1. Vector Processor
+    * Pros
+        * No dependencies within a vector 
+        * Each instruction generates a lot of work 
+        * Highly regular memory access pattern
+        * Fewer Branches in instructions
+    * Cons
+        * Only works for regular parallelism.(Arrays vs Linked list)
+        * Memory bandwidth can become a bottleneck
+
+        
