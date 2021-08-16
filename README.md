@@ -7,6 +7,7 @@ Keep lighting up the skill tree
 
 ### Computer/Program
 1. [Computer Architecture](./Computer_Architecture.md)
+1. [Structure and Interpretation of Computer Programs](https://github.com/Justin-ZS/sicp-solution)
 
 ### Program/Language
 1. [The Little Typer](./The_Little_Typer.md)
