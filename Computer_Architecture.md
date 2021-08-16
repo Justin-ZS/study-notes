@@ -434,4 +434,18 @@ F -> D -> |Schedule| -> E -> E ------> |Reorder| -> W
         * Only works for regular parallelism.(Arrays vs Linked list)
         * Memory bandwidth can become a bottleneck
 
-        
+## GPUs
+1. Multithreaded
+    * Generates a thread to execute each iteration.
+    * Each thread does the same thing but on different data
+    * Also called SPMD (single program multiple data)
+    * Wrap: A set of threads that execute the same instruction
+    * Dynamically merge threads executing the same instruction after branch divergence
+
+## VLIW and DAE
+1. VLIW
+    * A very long instruction word consists of multiple independent instructions
+    * Compiler finds independent instructions and statically packs them into a single VLIW instruction
+    * Enable simple hardware but complex software (compiler)
+1. DAE(decouple access/execute)
+    * Decouple operand access and execution via two separate streams that communicate with ISA-visible queues
