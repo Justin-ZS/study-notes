@@ -56,7 +56,7 @@
     Sales[SumOfSalesQuantity] = SUMX( Sales, Sales[Quantity] )
     ```
 
-    <img width="70%" src="./img/Screen Shot 2020-11-06 at 5.51.25 PM.png" /> 
+    <img width="70%" src="./image/Screen Shot 2020-11-06 at 5.51.25 PM.png" /> 
 
     ```ts
     const Sales = rawTable as Table;                    // original table data
@@ -77,7 +77,7 @@
     ) + 1
     ```
 
-    <img width="70%" src="./img/Screen Shot 2020-11-06 at 5.57.56 PM.png" /> 
+    <img width="70%" src="./image/Screen Shot 2020-11-06 at 5.57.56 PM.png" /> 
 
     ```ts
     const Product = rawTable as Table;                    // original table data
@@ -185,7 +185,7 @@ CALCULATE ( <Expression> [, <Filter> [, <Filter> [, … ] ] ] )
     * `Expanded Table` = `Base Table` natural join all related tables
     * Expansion goes towards the one-side of a relationship and does not stop at the first level
 
-<img max-width="80%" src="./img/animation-expanded-table.gif" />
+<img max-width="80%" src="./image/animation-expanded-table.gif" />
 
 ```SQL
 --  base_table -- N:1 --> relate_table_1
@@ -260,17 +260,17 @@ expanded_table AS (
 
 ## The DAX engines
 
-<img max-width="80%" src="./img/Screen Shot 2020-11-10 at 11.24.21 AM.png" />
+<img max-width="80%" src="./image/Screen Shot 2020-11-10 at 11.24.21 AM.png" />
 
 1. VertiPaq
     1. in-memory columnar database
     1. compression
         1. Value Encoding:  
-        <img width="60%" src="./img/Screen Shot 2020-11-06 at 1.40.39 PM.png" />
+        <img width="60%" src="./image/Screen Shot 2020-11-06 at 1.40.39 PM.png" />
         1. Hash Encoding  
-        <img width="60%" src="./img/Screen Shot 2020-11-06 at 1.43.08 PM.png" />
-        1. Run Length Encoding (RLE)  
-        <img width="60%" src="./img/Screen Shot 2020-11-06 at 1.45.17 PM.png" />
+        <img width="60%" src="./image/Screen Shot 2020-11-06 at 1.43.08 PM.png" />
+        1. Run Length Encoding ([RLE](https://en.wikipedia.org/wiki/Run-length_encoding))  
+        <img width="60%" src="./image/Screen Shot 2020-11-06 at 1.45.17 PM.png" />
     1. The factors influencing the compression ratio of a Tabular model are, in order of importance:
         1. The cardinality of the column, which defines the number of bits used to store a value.
         2. The number of repetitions. A column with many repeated values is compressed more.
@@ -280,7 +280,7 @@ expanded_table AS (
         1. improve the efficiency of RLE, reduce the memory footprint of the model.
         1. Only when the data model is really large
     1. Relationships: pairs of IDs and row numbers  
-        <img width="60%" src="./img/Screen Shot 2020-11-06 at 1.53.56 PM.png" />
+        <img width="60%" src="./image/Screen Shot 2020-11-06 at 1.53.56 PM.png" />
     1. Pre-aggregation
 
 1. DirectQuery  

@@ -11,7 +11,7 @@ Keep lighting up the skill tree
 
 ### Program/Language
 1. [The Little Typer](./The_Little_Typer.md)
-1. [The Definitive Guide to DAX](./The_Definitive_Guide_to_DAX)
+1. [The Definitive Guide to DAX](./The_Definitive_Guide_to_DAX.md)
 
 ### Frontend
 1. [Style and Layout](./Style_and_Layout.md)
