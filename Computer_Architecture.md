@@ -449,3 +449,32 @@ F -> D -> |Schedule| -> E -> E ------> |Reorder| -> W
     * Enable simple hardware but complex software (compiler)
 1. DAE(decouple access/execute)
     * Decouple operand access and execution via two separate streams that communicate with ISA-visible queues
+
+## Systolic Arrays
+1. Goal: design an accelerator that has
+    * Simple, regular design
+    * High concurrency
+     Balanced computation and I/O bandwidth
+1. Idea
+    * Replace a single processing element (PR) with a regular array of PEs and carefully orchestrate flow of data between the PEs
+    * [深入理解Google TPU的脉动阵列架构](http://chips.dataguru.cn/article-11106-1.html)
+    
+## Memory
+1. Virtual vs. Physical Memory
+    * Programmer sees virtual memory
+    * The system (software + hardware) maps virtual memory addresses to physical memory
+1. DRAM
+    * Dynamic random access memory
+    * Capacitor charge state indicates stored value
+        * charged or discharged indicates storage of 1 or 0
+    * Capacitor leaks through the RC path
+        * DRAM cell loses charge over time
+        * DRAM cell needs to be refreshed
+1. Memory Hierarchy
+    * Have multiple storage levels to ensure the needed data is kept in the faster levels
+        * Register File -> L1/L2/L3 Cache -> Main Memory -> Hard Disk
+    * Temporal locality
+        * Recently accessed data will be accessed again in the near future
+    * Spatial locality
+        * Nearby data in memory will be accessed in the near future
+        * E.g., Sequential instructions, array traversal
