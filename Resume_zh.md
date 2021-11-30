@@ -6,7 +6,7 @@
 * Github：[https://github.com/Justin-ZS](https://github.com/Justin-ZS)
 
 # 工作经历
-## 西安葡萄城（2017年7月～2021年6月）
+## 西安葡萄城(GrapeCity)（2017年7月～2021年6月）
 ### 4年同一个项目（[商业智能](https://www.grapecity.com.cn/solutions/wyn)）核心开发
 从零开始和项目一起成长,承担核心功能的预研，开发和迭代，包括 Advanced Chart, Dashboard Layout, Data Engine 等等
 
@@ -25,7 +25,11 @@
 负责高阶图表的设计和实现，高阶图表 = 图表 + 增强功能
 * **设计**：灵感来源于高阶函数，为了提供高阶图表，需要把图表的生命周期升阶，包括的创建，获取数据，渲染等等。
 * **实现**：在不侵入图表逻辑的前提下，尽可能复用已有代码，以统一的方式附加增强功能
-* **例子**：计算图表：数据来源于聚集结果+类Excel公式；合并图表：数据来源于多个聚集结果的合并
+* **例子**：计算图表：数据来源于聚集结果+类Excel公式；合并图表：数据来源于多个聚集结果的合
+
+## 微策略(MicroStrategy)（2021年9月～现在）
+### Software Engineer, Senior
+Visualization
 
 # 技术栈
 前端基础：JavaScript/TypeScript, CSS/Sass  
