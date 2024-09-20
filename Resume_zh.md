@@ -33,7 +33,7 @@
 
 ### Viz 的维护和迭代
 主要是基于自研前端框架 - Mojo(ES5时代的产物)，为 Viz 添加新的功能，例如 Viz Theme，Copy/Paste Viz Formatting 等。
-此外还维护了一个基于 React 的 Viz Format Panel。
+此外还维护了 Web 上基于 React 的 Viz Format Panel 和 IOS 上的部分 Viz 。
 难点：理解高度复杂，代码量巨大，前后端完全耦合的 CodeBase，并在不引入 Regression 的前提下开发新功能和修复 Bug。
 
 ### [AI Chatbot](https://www.microstrategy.com/enterprise-analytics/ai-chatbot-for-apps) 中 Viz 的渲染
