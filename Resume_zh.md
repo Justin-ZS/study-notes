@@ -10,7 +10,7 @@
 # 工作经历
 ## 西安葡萄城(GrapeCity)｜核心开发工程师
 **时间**：2017年7月～2021年6月（4年）  
-**项目**：[Wyn BI](https://www.grapecity.com.cn/solutions/wyn) | Dashboard组 
+**项目**：[Wyn BI](https://www.grapecity.com.cn/solutions/wyn/bi) | Dashboard组 
 
 参与 Wyn BI 项目从零开始的开发工作，负责核心功能的预研、开发与迭代，包括数据引擎、仪表盘布局、高阶图表等模块的设计和实现
 
