@@ -9,7 +9,7 @@
 # 工作经历
 ## 西安葡萄城(GrapeCity)（4年，2017年7月～2021年6月）
 ### [Wyn BI](https://www.grapecity.com.cn/solutions/wyn) - Dashboard组 - 核心开发
-整4年都在同一个组，从零开始和项目一起成长，承担核心功能的预研，开发和迭代，包括 Data Engine，Dashboard Layout，Advanced Chart 等等
+整整4年(加实习是5年)都在同一个组，从零开始和项目一起成长，承担核心功能的预研，开发和迭代，包括 Data Engine，Dashboard Layout，Advanced Chart 等等
 
 ### Data Engine
 前后一共三个版本
