@@ -3,12 +3,12 @@
 * 本科/西安电子科技大学/信息安全
 * 工作年限：7年
 * 手机：18829209541
-* 求职意向：前端高级开发
+* 求职意向：前端高级/资深开发工程师
 * 主技术栈：JS/TS，React（无Vue/移动端/小程序经验）
 
 # 工作经历
 ## 西安葡萄城(GrapeCity)（4年，2017年7月～2021年6月）
-### [Wyn BI](https://www.grapecity.com.cn/solutions/wyn) - Dashboard组 - 核心开发
+### [Wyn BI](https://www.grapecity.com.cn/solutions/wyn) - Dashboard组 - 核心开发工程师
 整整4年(加实习是5年)都在同一个组，从零开始和项目一起成长，承担核心功能的预研，开发和迭代，包括 Data Engine，Dashboard Layout，Advanced Chart 等等
 
 ### Data Engine
@@ -29,8 +29,8 @@
 * **例子**：计算图表：数据来源于聚集结果+类Excel公式；合并图表：数据来源于多个聚集结果的合
 
 ## 微策略(MicroStrategy)（3年，2021年9月～2024年9月）
-### [MSTR BI](https://www.microstrategy.com/enterprise-analytics/dossier) - 可视化/Visualization组 - 高级开发
-负责维护和迭代 可视化/Viz 相关的功能，[AI Chatbot](https://www.microstrategy.com/enterprise-analytics/ai-chatbot-for-apps) 中 Viz 的渲染，[Auto Narratives](https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-smart-narrative) 中算法推荐 Prompts 的撰写
+### [MSTR BI](https://www.microstrategy.com/enterprise-analytics/dossier) - 可视化/Visualization组 - 高级开发工程师
+负责维护和迭代可视化/Viz 相关的功能，[AI Chatbot](https://www.microstrategy.com/enterprise-analytics/ai-chatbot-for-apps) 中 Viz 的渲染，[Auto Narratives](https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-smart-narrative) 中算法推荐 Prompts 的撰写
 
 ### Viz 的维护和迭代
 主要是维护自研的前端框架 - Mojo(ES5时代的产物)，为 Viz 添加新的功能，例如 Viz Theme，Copy/Paste Viz Formatting 等  
