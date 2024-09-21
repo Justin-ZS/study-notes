@@ -29,7 +29,7 @@
 * **例子**：计算图表：数据来源于聚集结果+类Excel公式；合并图表：数据来源于多个聚集结果的合
 
 ## 微策略(MicroStrategy)（3年，2021年9月～2024年9月）
-### MSTR BI Dashboard - 可视化/Visualization组 - 高级开发
+### [MSTR BI](https://www.microstrategy.com/enterprise-analytics/dossier) - 可视化/Visualization组 - 高级开发
 负责维护和迭代 可视化/Viz 相关的功能，[AI Chatbot](https://www.microstrategy.com/enterprise-analytics/ai-chatbot-for-apps) 中 Viz 的渲染，[Auto Narratives](https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-smart-narrative) 中算法推荐 Prompts 的撰写
 
 ### Viz 的维护和迭代
