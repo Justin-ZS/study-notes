@@ -46,9 +46,7 @@ AI Chatbot 是 MSTR 拥抱 AI 之后最大的核心功能，也是最大的卖�
 Auto Narratives 是 MSTR 2024 年最重磅的更新，暂时没找到官方的文档，毕竟刚做完就被裁了  
 链接里的是 Power BI 的 Smart Narrative，功能类似，当初也是为了对标它才做的 Auto Narratives  
 * **实现**：撰写 Prompts 让 AI 根据用户的需求和所选择的 Viz 的数据，推荐合适的算法和参数  
-* **难点**：Example 结合 Step by Step 让 AI 更准确的理解用户的问题  
-转译特殊字符，移除不必要的 ID 等来提高输出的稳定性和质量  
-[调优 LLM 参数](https://platform.openai.com/docs/advanced-usage/frequency-and-presence-penalties)以避免 GPT 在生成结构化的输出时陷入死循环  
+* **难点**：Example 结合 Step by Step 让 AI 更准确的理解用户的问题；转译特殊字符，移除不必要的 ID 等来提高输出的稳定性和质量；[调优 LLM 参数](https://platform.openai.com/docs/advanced-usage/frequency-and-presence-penalties)以避免 GPT 在生成结构化的输出时陷入死循环  
 
 # 技术栈
 前端基础：JavaScript/TypeScript, CSS/Sass  
